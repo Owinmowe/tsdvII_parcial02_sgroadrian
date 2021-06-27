@@ -45,7 +45,7 @@ public class Ship: MonoBehaviour
         {
             OnVelocityChange?.Invoke(rb.velocity);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.maxTerrainCheckDistance, shipConfiguration.terrainLayer);
-            OnAltitudeChange?.Invoke(hit, hit.distance);
+            OnAltitudeChange?.Invoke(hit, hit.distance - col.size.y / 2);
         }
     }
 
@@ -75,6 +75,7 @@ public class Ship: MonoBehaviour
                 Vector2 force = transform.up * shipConfiguration.accelerateSpeed;
                 rb.AddForce(force, ForceMode2D.Force);
                 currentFuel -= Time.deltaTime * shipConfiguration.fuelAcelerationConsumption;
+                OnFuelConsumed?.Invoke(currentFuel, shipConfiguration.maxFuel);
                 OnAcceleration?.Invoke();
                 break;
             default:
@@ -89,7 +90,6 @@ public class Ship: MonoBehaviour
         bool correctLandingSpeed = rb.velocity.magnitude < shipConfiguration.landingSpeedTolerance;
         OnLanding?.Invoke(correctLandingAngle && correctLandingPosition && correctLandingSpeed);
         OnVelocityChange?.Invoke(Vector2.zero);
-        OnAltitudeChange?.Invoke(true, 0);
         shipLocked = true;
         rb.Sleep();
     }
