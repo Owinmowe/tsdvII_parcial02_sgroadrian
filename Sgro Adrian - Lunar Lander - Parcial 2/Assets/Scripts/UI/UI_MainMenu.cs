@@ -4,9 +4,11 @@ using UnityEngine;
 public class UI_MainMenu : MonoBehaviour
 {
 
+    [SerializeField] BackgroundController bg = null;
+    [SerializeField] Vector2 backgroundSpeed = Vector2.zero;
+    [Space(10)]
     [SerializeField] List<UI_Component> splashArts = null;
     [Space(10)]
-    [SerializeField] UI_Component generalBackground;
     [SerializeField] List<UI_Component> mainMenuComponents = null;
     [SerializeField] List<UI_Component> creditsMenuComponents = null;
 
@@ -14,6 +16,7 @@ public class UI_MainMenu : MonoBehaviour
 
     private void Start()
     {
+        bg.SetBackgroundSpeed(backgroundSpeed);
         foreach (var item in splashArts)
         {
             item.OnTransitionEnd += NextSplashArt;
@@ -33,12 +36,14 @@ public class UI_MainMenu : MonoBehaviour
         }
         else
         {
-            generalBackground.TransitionIn();
-            StartMenu();
+            foreach (var item in mainMenuComponents)
+            {
+                item.TransitionIn();
+            }
         }
     }
 
-    void StartMenu()
+    public void StartMenu()
     {
         foreach (var item in creditsMenuComponents)
         {
@@ -61,4 +66,14 @@ public class UI_MainMenu : MonoBehaviour
             item.TransitionIn();
         }
     }
+
+    public void StartGame()
+    {
+        foreach (var item in mainMenuComponents)
+        {
+            item.TransitionOut();
+        }
+        LoaderManager.Get().LoadSceneAsync("Gameplay");
+    }
+
 }
