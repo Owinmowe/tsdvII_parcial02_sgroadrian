@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UI_LoadingScreen : MonoBehaviour
 {
-    [SerializeField] Image blackScreen;
+    [SerializeField] Image blackScreen = null;
 
     bool canFadeOut = true;
 

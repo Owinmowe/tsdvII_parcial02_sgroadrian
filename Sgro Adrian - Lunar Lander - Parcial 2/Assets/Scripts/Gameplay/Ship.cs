@@ -13,10 +13,14 @@ public class Ship: MonoBehaviour
     CapsuleCollider2D col = null;
 
     public Action OnAcceleration;
+    public Action<bool, float> OnAltitudeChange;
+    public Action<float, float> OnFuelConsumed;
+    public Action<int> OnPointsRecieved;
     public Action OnRotation;
     public Action<bool> OnLanding;
     public Action<Vector2> OnVelocityChange;
 
+    float currentFuel;
     float currentAngle = 0;
     bool shipLocked = false;
 
@@ -31,11 +35,18 @@ public class Ship: MonoBehaviour
         col.direction = shipConfiguration.direction;
         col.size = shipConfiguration.colliderSize;
         col.isTrigger = true;
+
+        currentFuel = shipConfiguration.maxFuel;
     }
 
     private void Update()
     {
-        if(!shipLocked) OnVelocityChange?.Invoke(rb.velocity);
+        if (!shipLocked)
+        {
+            OnVelocityChange?.Invoke(rb.velocity);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.maxTerrainCheckDistance, shipConfiguration.terrainLayer);
+            OnAltitudeChange?.Invoke(hit, hit.distance);
+        }
     }
 
     public void Move(MovementType moveType)
@@ -60,8 +71,10 @@ public class Ship: MonoBehaviour
                 }
                 break;
             case MovementType.Accelerate:
+                if (currentFuel < 0) return;
                 Vector2 force = transform.up * shipConfiguration.accelerateSpeed;
                 rb.AddForce(force, ForceMode2D.Force);
+                currentFuel -= Time.deltaTime * shipConfiguration.fuelAcelerationConsumption;
                 OnAcceleration?.Invoke();
                 break;
             default:
@@ -72,9 +85,11 @@ public class Ship: MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         bool correctLandingAngle = Vector2.Angle(transform.up, Vector3.up) < shipConfiguration.landingAngleTolerance;
-        bool correctLandingPosition = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.checkDistance, shipConfiguration.landingLayer);
+        bool correctLandingPosition = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.maxLandingCheckDistance, shipConfiguration.landingLayer);
         bool correctLandingSpeed = rb.velocity.magnitude < shipConfiguration.landingSpeedTolerance;
         OnLanding?.Invoke(correctLandingAngle && correctLandingPosition && correctLandingSpeed);
+        OnVelocityChange?.Invoke(Vector2.zero);
+        OnAltitudeChange?.Invoke(true, 0);
         shipLocked = true;
         rb.Sleep();
     }

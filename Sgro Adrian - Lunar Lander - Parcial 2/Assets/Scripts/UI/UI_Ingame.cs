@@ -8,10 +8,17 @@ public class UI_Ingame : MonoBehaviour
 
     [SerializeField] Ship playerShip = null;
     [Header("Game HUD")]
+    [SerializeField] int scaleMultiplier = 100;
     [SerializeField] UI_Component velocityXText = null;
     [SerializeField] UI_Component velocityYText = null;
     [SerializeField] UI_Component AltitudeText = null;
+    [SerializeField] UI_Component FuelBar = null;
     [SerializeField] List<UI_Component> general_HUD = null;
+
+    [Header("Pause HUD")]
+    [SerializeField] List<UI_Component> pause_HUD = null;
+
+    [Header("End game HUD")]
     [SerializeField] List<UI_Component> success_HUD = null;
     [SerializeField] List<UI_Component> fail_HUD = null;
 
@@ -29,6 +36,7 @@ public class UI_Ingame : MonoBehaviour
         {
             playerShip.OnVelocityChange += UpdateVelocity;
             playerShip.OnLanding += LandingEvent;
+            playerShip.OnAltitudeChange += UpdateAltitude;
         }        
     }
 
@@ -57,10 +65,15 @@ public class UI_Ingame : MonoBehaviour
 
     void UpdateVelocity(Vector2 velocity)
     {
-        velocityXTextComponent.text = "Velocity X: " + velocity.x.ToString("f02");
-        velocityYTextComponent.text = "Velocity y: " + velocity.y.ToString("f02");
-        AltitudeTextComponent.text = "Altitude: " + playerShip.transform.position.y.ToString("f02");
+        velocityXTextComponent.text = "Velocity X: " + Mathf.RoundToInt(velocity.x * scaleMultiplier).ToString();
+        velocityYTextComponent.text = "Velocity y: " + Mathf.RoundToInt(velocity.y * scaleMultiplier).ToString();
         bg.SetBackgroundSpeed(velocity);
+    }
+
+    void UpdateAltitude(bool canCheck, float altitude)
+    {
+        if (canCheck) AltitudeTextComponent.text = "Altitude: " + Mathf.RoundToInt(altitude * scaleMultiplier).ToString();
+        else AltitudeTextComponent.text = "Altitude: Undefined \nSensors can't reach terrain.";
     }
 
     void LandingEvent(bool success)
@@ -81,4 +94,5 @@ public class UI_Ingame : MonoBehaviour
             }
         }
     }
+
 }
