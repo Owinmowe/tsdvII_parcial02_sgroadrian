@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ShipMovement))]
 public class ShipParticlesController : MonoBehaviour
 {
     [Header("Particle System")]
-    [SerializeField] ParticleSystem thrustParticles = null;
+    [SerializeField] Ship ship = null;
     [SerializeField] int minParticlesThrust = 0;
     [SerializeField] int maxParticlesThrust = 100;
-    [SerializeField] int particlesAccelerationSpeed = 5;
+    [SerializeField] int particlesAccelerationSpeed = 40;
 
     ParticleSystem.EmissionModule emissionModule;
 
@@ -17,8 +16,11 @@ public class ShipParticlesController : MonoBehaviour
 
     private void Awake()
     {
-        emissionModule = thrustParticles.emission;
-        GetComponent<ShipMovement>().OnAcceleration += IncrementParticles;
+        emissionModule = GetComponent<ParticleSystem>().emission;
+        if(ship != null)
+        {
+            ship.OnAcceleration += IncrementParticles;
+        }
     }
 
     void IncrementParticles()
