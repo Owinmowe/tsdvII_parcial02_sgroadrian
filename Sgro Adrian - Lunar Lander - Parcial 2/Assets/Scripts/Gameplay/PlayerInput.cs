@@ -1,16 +1,18 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ShipMovement))]
+[RequireComponent(typeof(Ship))]
 public class PlayerInput : MonoBehaviour
 {
 
-    ShipMovement shipMovement = null;
+    public static Action OnPausePressed;
+
+    Ship shipMovement = null;
 
     private void Awake()
     {
-        shipMovement = GetComponent<ShipMovement>();
+        shipMovement = GetComponent<Ship>();
     }
 
     private void Update()
@@ -27,5 +29,15 @@ public class PlayerInput : MonoBehaviour
         {
             shipMovement.Move(MovementType.TurnRight);
         }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Pause();
+        }
     }
+
+    public void Pause()
+    {
+        OnPausePressed?.Invoke();
+    }
+
 }
