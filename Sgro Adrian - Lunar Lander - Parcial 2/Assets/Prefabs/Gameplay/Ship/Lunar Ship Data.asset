@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c5176777945454597ba7b112f99416, type: 3}
+  m_Name: Lunar Ship Data
+  m_EditorClassIdentifier: 
+  accelerateSpeed: 0.1
+  turnSpeed: 1
+  turnRange: 180
+  mass: 1
+  linearDrag: 0.1
+  gravityScale: 0.01
+  direction: 0
+  colliderSize: {x: 0.4, y: 0.6}
+  landingAngleTolerance: 10
+  landingSpeedTolerance: 10
+  landingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  checkDistance: 0.5
