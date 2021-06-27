@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UI_Ingame : MonoBehaviour
@@ -12,7 +13,7 @@ public class UI_Ingame : MonoBehaviour
     [SerializeField] UI_Component velocityXText = null;
     [SerializeField] UI_Component velocityYText = null;
     [SerializeField] UI_Component AltitudeText = null;
-    [SerializeField] UI_Component FuelBar = null;
+    [SerializeField] UI_Component fuelBar = null;
     [SerializeField] List<UI_Component> general_HUD = null;
 
     [Header("Pause HUD")]
@@ -29,6 +30,7 @@ public class UI_Ingame : MonoBehaviour
     TextMeshProUGUI velocityXTextComponent = null;
     TextMeshProUGUI velocityYTextComponent = null;
     TextMeshProUGUI AltitudeTextComponent = null;
+    Image fuelImageComponent = null;
 
     private void Awake()
     {
@@ -37,10 +39,16 @@ public class UI_Ingame : MonoBehaviour
             playerShip.OnVelocityChange += UpdateVelocity;
             playerShip.OnLanding += LandingEvent;
             playerShip.OnAltitudeChange += UpdateAltitude;
+            playerShip.OnFuelConsumed += UpdateFuel;
         }        
     }
 
     void Start()
+    {
+        InitializeMenus();
+    }
+
+    private void InitializeMenus()
     {
         if (velocityXText)
         {
@@ -57,6 +65,11 @@ public class UI_Ingame : MonoBehaviour
             AltitudeText.TransitionIn();
             AltitudeTextComponent = AltitudeText.GetComponent<TextMeshProUGUI>();
         }
+        if (fuelBar)
+        {
+            fuelBar.TransitionIn();
+            fuelImageComponent = fuelBar.GetComponent<Image>();
+        }
         foreach (var uI_Component in general_HUD)
         {
             uI_Component.TransitionIn();
@@ -72,8 +85,17 @@ public class UI_Ingame : MonoBehaviour
 
     void UpdateAltitude(bool canCheck, float altitude)
     {
-        if (canCheck) AltitudeTextComponent.text = "Altitude: " + Mathf.RoundToInt(altitude * scaleMultiplier).ToString();
+        if (canCheck)
+        {
+            if(altitude < 1) altitude = 0;
+            AltitudeTextComponent.text = "Altitude: " + Mathf.RoundToInt(altitude * scaleMultiplier).ToString();
+        }
         else AltitudeTextComponent.text = "Altitude: Undefined \nSensors can't reach terrain.";
+    }
+
+    void UpdateFuel(float currentFuel, float maxFuel)
+    {
+        fuelImageComponent.fillAmount = currentFuel / maxFuel;
     }
 
     void LandingEvent(bool success)

@@ -31,4 +31,4 @@ MonoBehaviour:
     m_Bits: 256
   maxLandingCheckDistance: 0.5
   maxFuel: 1000
-  fuelAcelerationConsumption: 0.1
+  fuelAcelerationConsumption: 10
