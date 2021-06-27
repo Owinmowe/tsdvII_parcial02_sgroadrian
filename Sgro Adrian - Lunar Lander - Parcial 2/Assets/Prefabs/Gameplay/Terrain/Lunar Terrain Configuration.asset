@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3e4bdd03ddc984c8802827a9501e24, type: 3}
+  m_Name: Lunar Terrain Configuration
+  m_EditorClassIdentifier: 
+  terrainBase: {fileID: 1009178054995176124, guid: af365c868e72dc744ab6da3073922b97,
+    type: 3}
+  currentTerrainLinesTypes: 2
+  terrainSize: 200
+  terrainPoints: 200
+  nextPointRange: 2
+  perlinMultiplier: 10
+  landingSitePrefab: {fileID: 5905459349907335762, guid: c7fc1ac1920b43a47b7832a3be8d616a,
+    type: 3}
+  offsetFromSurface: -2.95
+  landings2XPerTerrain: 10
+  landingPoints2X: 2
+  landingSize2X: 0.4
+  landings3XPerTerrain: 10
+  landingPoints3X: 3
+  landingSize3X: 0.2
+  landings5XPerTerrain: 10
+  landingPoints5X: 5
+  landingSize5X: 0.1
