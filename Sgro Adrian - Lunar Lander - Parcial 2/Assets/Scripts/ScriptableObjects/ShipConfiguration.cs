@@ -17,9 +17,18 @@ public class ShipConfiguration : ScriptableObject
     public CapsuleDirection2D direction = CapsuleDirection2D.Vertical;
     public Vector2 colliderSize = new Vector2(.4f, .6f);
 
+    [Header("Ground Check")]
+    public LayerMask terrainLayer = default;
+    public float maxTerrainCheckDistance = 1f;
+
     [Header("Landing")]
     public float landingAngleTolerance = 10f;
     public float landingSpeedTolerance = 10f;
     public LayerMask landingLayer = default;
-    public float checkDistance = .5f;
+    public float maxLandingCheckDistance = .5f;
+
+    [Header("Fuel")]
+    public float maxFuel = 1000;
+    public float fuelAcelerationConsumption = .1f; 
+
 }

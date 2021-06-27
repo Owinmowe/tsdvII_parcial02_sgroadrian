@@ -20,9 +20,15 @@ MonoBehaviour:
   gravityScale: 0.01
   direction: 0
   colliderSize: {x: 0.4, y: 0.6}
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  maxTerrainCheckDistance: 100
   landingAngleTolerance: 10
   landingSpeedTolerance: 10
   landingLayer:
     serializedVersion: 2
     m_Bits: 256
-  checkDistance: 0.5
+  maxLandingCheckDistance: 0.5
+  maxFuel: 1000
+  fuelAcelerationConsumption: 0.1

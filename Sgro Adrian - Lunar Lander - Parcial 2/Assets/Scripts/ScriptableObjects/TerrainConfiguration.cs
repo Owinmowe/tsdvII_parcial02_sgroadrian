@@ -18,15 +18,15 @@ public class TerrainConfiguration : ScriptableObject
     public GameObject landingSitePrefab = null;
     public float offsetFromSurface = -3.5f;
     public int landings2XPerTerrain = 7;
-    public int landingPoints2X = 2;
+    public int landingMultiplier2X = 2;
     public float landingSize2X = .06f;
     public Color landing2XUIColor = Color.green;
     public int landings3XPerTerrain = 7;
-    public int landingPoints3X = 3;
+    public int landingMultiplier3X = 3;
     public Color landing3XUIColor = Color.yellow;
     public float landingSize3X = .04f;
     public int landings5XPerTerrain = 7;
-    public int landingPoints5X = 5;
+    public int landingMultiplier5X = 5;
     public Color landing5XUIColor = Color.red;
     public float landingSize5X = .02f;
 }
