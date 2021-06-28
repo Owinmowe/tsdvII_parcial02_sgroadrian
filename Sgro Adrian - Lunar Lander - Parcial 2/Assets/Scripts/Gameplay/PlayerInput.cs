@@ -6,30 +6,30 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
 
-    public static Action OnPausePressed;
+    public Action OnPausePressed;
 
-    Ship shipMovement = null;
+    Ship shipcomponent = null;
 
     private void Awake()
     {
-        shipMovement = GetComponent<Ship>();
+        shipcomponent = GetComponent<Ship>();
     }
 
     private void Update()
     {
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
-            shipMovement.Move(MovementType.Accelerate);
+            shipcomponent.Move(MovementType.Accelerate);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            shipMovement.Move(MovementType.TurnLeft);
+            shipcomponent.Move(MovementType.TurnLeft);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            shipMovement.Move(MovementType.TurnRight);
+            shipcomponent.Move(MovementType.TurnRight);
         }
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
         }

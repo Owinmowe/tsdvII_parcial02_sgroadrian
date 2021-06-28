@@ -90,7 +90,7 @@ public class TerrainGenerator : MonoBehaviour
                 terrainSpline.SetPosition(tempPosX + 1, new Vector3(pos3.x, pos2.y, 0));
                 Vector3 newLandingSitePos = new Vector3(pos2.x, pos2.y + terrainConfig.offsetFromSurface, 0);
                 GameObject go = Instantiate(terrainConfig.landingSitePrefab, newLandingSitePos, Quaternion.identity, transform);
-                go.GetComponent<LandingSite>().SetLandingType(terrainConfig.landingMultiplier2X, terrainConfig.landingSize2X, terrainConfig.landing2XUIColor);
+                go.GetComponent<LandingSite>().SetLandingType(terrainConfig.baseLandingScore, terrainConfig.landingMultiplier2X, terrainConfig.landingSize2X, terrainConfig.landing2XUIColor);
                 aux++;
             }
         }
@@ -108,7 +108,7 @@ public class TerrainGenerator : MonoBehaviour
                 terrainSpline.SetPosition(tempPosX - 1, new Vector3(pos1.x, pos2.y, 0));
                 Vector3 newLandingSitePos = new Vector3(pos2.x, pos2.y + terrainConfig.offsetFromSurface, 0);
                 GameObject go = Instantiate(terrainConfig.landingSitePrefab, newLandingSitePos, Quaternion.identity, transform);
-                go.GetComponent<LandingSite>().SetLandingType(terrainConfig.landingMultiplier3X, terrainConfig.landingSize3X, terrainConfig.landing3XUIColor);
+                go.GetComponent<LandingSite>().SetLandingType(terrainConfig.baseLandingScore, terrainConfig.landingMultiplier3X, terrainConfig.landingSize3X, terrainConfig.landing3XUIColor);
                 aux++;
             }
         }
@@ -124,7 +124,7 @@ public class TerrainGenerator : MonoBehaviour
                 Vector3 pos2 = terrainSpline.GetPosition(tempPosX);
                 Vector3 newLandingSitePos = new Vector3(pos2.x, pos2.y + terrainConfig.offsetFromSurface, 0);
                 GameObject go = Instantiate(terrainConfig.landingSitePrefab, newLandingSitePos, Quaternion.identity, transform);
-                go.GetComponent<LandingSite>().SetLandingType(terrainConfig.landingMultiplier5X, terrainConfig.landingSize5X, terrainConfig.landing5XUIColor);
+                go.GetComponent<LandingSite>().SetLandingType(terrainConfig.baseLandingScore, terrainConfig.landingMultiplier5X, terrainConfig.landingSize5X, terrainConfig.landing5XUIColor);
                 aux++;
             }
         }

@@ -17,6 +17,7 @@ public class TerrainConfiguration : ScriptableObject
     [Header("Landing Configuration")]
     public GameObject landingSitePrefab = null;
     public float offsetFromSurface = -3.5f;
+    public int baseLandingScore = 100;
     public int landings2XPerTerrain = 7;
     public int landingMultiplier2X = 2;
     public float landingSize2X = .06f;

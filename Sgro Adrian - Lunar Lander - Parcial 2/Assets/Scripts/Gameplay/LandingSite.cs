@@ -4,7 +4,7 @@ using TMPro;
 public class LandingSite : MonoBehaviour
 {
 
-    int Multiplier = 0;
+    int score = 0;
     [SerializeField] GameObject LandingLine = null;
     [SerializeField] TextMeshPro textComponent = null;
     [SerializeField] float textBlinkSpeed = 1f;
@@ -14,13 +14,18 @@ public class LandingSite : MonoBehaviour
         GetComponent<Animator>().SetFloat("BlinkSpeed", textBlinkSpeed);
     }
 
-    public void SetLandingType(int multi, float colliderXSize, Color color)
+    public void SetLandingType(int baseScore, int multi, float colliderXSize, Color color)
     {
-        this.Multiplier = multi;
+        score = multi * baseScore;
         gameObject.name = multi.ToString() + "X";
         textComponent.text = multi.ToString() + "X";
         textComponent.color = color;
         LandingLine.GetComponent<SpriteRenderer>().color = color;
         LandingLine.transform.localScale = new Vector2(colliderXSize, LandingLine.transform.localScale.y); 
+    }
+
+    public int GetScore()
+    {
+        return score;
     }
 }
