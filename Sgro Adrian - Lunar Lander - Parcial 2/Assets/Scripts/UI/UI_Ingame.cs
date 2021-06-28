@@ -29,6 +29,10 @@ public class UI_Ingame : MonoBehaviour
     [SerializeField] UI_Component pauseButton = null;
     bool onPauseMenu = false;
 
+    [Header("Help HUD")]
+    [SerializeField] List<UI_Component> help_HUD = null;
+    bool onHelpMenu = false;
+
     [Header("End game HUD")]
     [SerializeField] List<UI_Component> success_HUD = null;
     [SerializeField] List<UI_Component> fail_HUD = null;
@@ -146,6 +150,14 @@ public class UI_Ingame : MonoBehaviour
     void Pause()
     {
         onPauseMenu = !onPauseMenu;
+        if (onHelpMenu)
+        {
+            onHelpMenu = false;
+            foreach (var item in help_HUD)
+            {
+                item.TransitionOut();
+            }
+        }
         if (onPauseMenu)
         {
             bg.SetBackgroundSpeed(Vector2.zero);
@@ -162,6 +174,32 @@ public class UI_Ingame : MonoBehaviour
             {
                 item.TransitionOut();
             }
+        }
+    }
+
+    public void OpenHelpPanel()
+    {
+        onHelpMenu = true;
+        foreach (var item in pause_HUD)
+        {
+            item.TransitionOut();
+        }
+        foreach (var item in help_HUD)
+        {
+            item.TransitionIn();
+        }
+    }
+
+    public void CloseHelpPanel()
+    {
+        onHelpMenu = false;
+        foreach (var item in pause_HUD)
+        {
+            item.TransitionIn();
+        }
+        foreach (var item in help_HUD)
+        {
+            item.TransitionOut();
         }
     }
 
