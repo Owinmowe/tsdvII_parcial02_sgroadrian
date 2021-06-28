@@ -1514,7 +1514,7 @@ PrefabInstance:
     - target: {fileID: 8757011446575262307, guid: 0c95a144a67be4b438b650bc031366ae,
         type: 3}
       propertyPath: startingVelocity.y
-      value: -0.1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8757011446575262316, guid: 0c95a144a67be4b438b650bc031366ae,
         type: 3}

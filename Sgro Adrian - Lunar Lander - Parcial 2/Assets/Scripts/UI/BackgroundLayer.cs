@@ -25,22 +25,22 @@ public class BackgroundLayer : MonoBehaviour
 
     public void UpdateLayer()
     {
-        transform.position += velocity;
-        if(transform.position.x > screenSize.x)
+        transform.localPosition += velocity;
+        if(transform.localPosition.x > screenSize.x)
         {
-            transform.position = new Vector3(-screenSize.x, transform.position.y, 0);
+            transform.localPosition = new Vector3(-screenSize.x, transform.localPosition.y, 0);
         }
-        else if(transform.position.x < -screenSize.x)
+        else if(transform.localPosition.x < -screenSize.x)
         {
-            transform.position = new Vector3(screenSize.x, transform.position.y, 0);
+            transform.localPosition = new Vector3(screenSize.x, transform.localPosition.y, 0);
         }
-        if (transform.position.y > screenSize.y)
+        if (transform.localPosition.y > screenSize.y)
         {
-            transform.position = new Vector3(transform.position.x, -screenSize.y, 0);
+            transform.localPosition = new Vector3(transform.localPosition.x, -screenSize.y, 0);
         }
-        else if (transform.position.y < -screenSize.y)
+        else if (transform.localPosition.y < -screenSize.y)
         {
-            transform.position = new Vector3(transform.position.x, screenSize.y, 0);
+            transform.localPosition = new Vector3(transform.localPosition.x, screenSize.y, 0);
         }
     }
 }
