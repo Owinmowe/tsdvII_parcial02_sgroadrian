@@ -6,6 +6,7 @@ public class GameplayManager : MonoBehaviour
 {
     [SerializeField] Ship playerShip = null;
     [SerializeField] TerrainGenerator terrainGenerator = null;
+    [SerializeField] float timeBeforeReload = 3f;
     [SerializeField] float timeBetweenLevelCreation = 3f;
     int currentScore = 0;
 
@@ -36,6 +37,7 @@ public class GameplayManager : MonoBehaviour
 
     IEnumerator SuccessfulLanding()
     {
+        yield return new WaitForSeconds(timeBeforeReload);
         LoaderManager.Get().FakeLoad(timeBetweenLevelCreation);
         yield return new WaitForSeconds(timeBetweenLevelCreation / 2);
         terrainGenerator.CreateNewTerrain();
