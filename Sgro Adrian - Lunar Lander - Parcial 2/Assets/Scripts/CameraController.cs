@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] float cameraZoomInAltitude = 3f;
     [SerializeField] float cameraZoomOutDistance = 10f;
 
-    Vector3 playerInitialPosition = Vector3.zero;
     Camera camComponent;
     bool closeUp = false;
 
@@ -20,11 +19,6 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         camComponent = GetComponent<Camera>();
-    }
-
-    private void Start()
-    {
-        playerInitialPosition = player.transform.position;
     }
 
     private void Update()
@@ -47,5 +41,4 @@ public class CameraController : MonoBehaviour
         camComponent.orthographicSize = cameraZoomOutDistance;
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -1f);
     }
-
 }

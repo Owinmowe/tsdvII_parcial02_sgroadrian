@@ -24,10 +24,15 @@ public class TerrainConfiguration : ScriptableObject
     public Color landing2XUIColor = Color.green;
     public int landings3XPerTerrain = 7;
     public int landingMultiplier3X = 3;
-    public Color landing3XUIColor = Color.yellow;
     public float landingSize3X = .04f;
+    public Color landing3XUIColor = Color.yellow;
     public int landings5XPerTerrain = 7;
     public int landingMultiplier5X = 5;
-    public Color landing5XUIColor = Color.red;
     public float landingSize5X = .02f;
+    public Color landing5XUIColor = Color.red;
+    [Header("Wind Zone Configuration")]
+    public GameObject windZonePrefab = null;
+    public int windZonesAmountPerTerrain = 5;
+    public float windZoneMinimunStrenght = .1f;
+    public float windZoneMaximunStrenght = 1f;
 }

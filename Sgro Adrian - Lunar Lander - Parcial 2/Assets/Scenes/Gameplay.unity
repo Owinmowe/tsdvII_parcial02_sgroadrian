@@ -814,6 +814,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 485384900}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &503212153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7910778334841650227, guid: f50436564dc50974880e8659f9dc2cee,
+    type: 3}
+  m_PrefabInstance: {fileID: 7910778336233474009}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6d7e7d43483404a96d0d57e9d6e84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,6 +1886,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573377559073793404, guid: e17b7024af7ade84e8df182057bb877e,
+        type: 3}
+      propertyPath: shipResetTrigger
+      value: Reset
       objectReference: {fileID: 0}
     - target: {fileID: 7573377559155587846, guid: e17b7024af7ade84e8df182057bb877e,
         type: 3}
@@ -4413,6 +4430,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerShip: {fileID: 1014827717}
+  terrainGenerator: {fileID: 503212153}
+  timeBetweenLevelCreation: 3
 --- !u!1 &2138861219
 GameObject:
   m_ObjectHideFlags: 0

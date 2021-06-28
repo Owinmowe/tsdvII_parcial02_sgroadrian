@@ -7,8 +7,9 @@ public class ShipAnimationController : MonoBehaviour
     [SerializeField] Ship ship = null;
     [SerializeField] string shipExplosionTrigger = "Explosion";
     [SerializeField] string shipSuccessTrigger = "Landed";
+    [SerializeField] string shipResetTrigger = "Reset";
 
-    Animator anim;
+   Animator anim;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class ShipAnimationController : MonoBehaviour
         if(ship != null)
         {
             ship.OnLanding += ShipLandAnimation;
+            ship.OnShipReset += ShipReset;
         }   
     }
 
@@ -27,6 +29,11 @@ public class ShipAnimationController : MonoBehaviour
     {
         if (collisionSuccess) anim.SetTrigger(shipSuccessTrigger);
         else anim.SetTrigger(shipExplosionTrigger);
+    }
+
+    void ShipReset()
+    {
+        anim.SetTrigger(shipResetTrigger);
     }
 
 }

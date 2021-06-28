@@ -54,6 +54,7 @@ public class UI_Ingame : MonoBehaviour
             playerShip.OnAltitudeChange += UpdateAltitude;
             playerShip.OnFuelConsumed += UpdateFuel;
             playerShip.OnScoreGet += UpdateScore;
+            playerShip.OnShipReset += RestartMenus;
             playerShip.GetComponent<PlayerInput>().OnPausePressed += Pause;
         }
         if (velocityXText) velocityXTextComponent = velocityXText.GetComponent<TextMeshProUGUI>();
@@ -66,11 +67,22 @@ public class UI_Ingame : MonoBehaviour
 
     private void Start()
     {
-        InitializeMenus();
+        foreach (var uI_Component in general_HUD)
+        {
+            uI_Component.TransitionIn();
+        }
     }
 
-    private void InitializeMenus()
+    private void RestartMenus()
     {
+        foreach (var uI_Component in success_HUD)
+        {
+            uI_Component.TransitionOut();
+        }
+        foreach (var uI_Component in fail_HUD)
+        {
+            uI_Component.TransitionOut();
+        }
         foreach (var uI_Component in general_HUD)
         {
             uI_Component.TransitionIn();
@@ -89,6 +101,7 @@ public class UI_Ingame : MonoBehaviour
 
         velocityXTextComponent.text = "Velocity X: " + Mathf.RoundToInt(absVelX * scaleMultiplier).ToString();
         velocityYTextComponent.text = "Velocity y: " + Mathf.RoundToInt(absVelY * scaleMultiplier).ToString();
+
         Vector2 tempVel = new Vector2(-velocity.x * bGVelocityMultiplier.x, -velocity.y * bGVelocityMultiplier.y);
         bg.SetBackgroundSpeed(tempVel);
     }
@@ -135,6 +148,7 @@ public class UI_Ingame : MonoBehaviour
         onPauseMenu = !onPauseMenu;
         if (onPauseMenu)
         {
+            bg.SetBackgroundSpeed(Vector2.zero);
             pauseButton.TransitionOut();
             foreach (var item in pause_HUD)
             {

@@ -8,17 +8,32 @@ public class TerrainGenerator : MonoBehaviour
 
     [SerializeField] TerrainConfiguration terrainConfig = null;
 
-    Spline terrainSpline;
-    List<int> usedIndex = new List<int>();
+    GameObject currentTerrainGO = null;
+    GameObject currentItemsGO = null;
+    Spline terrainSpline = null;
+    List<int> usedIndex = null;
 
     void Start()
     {
-        GameObject go = Instantiate(terrainConfig.terrainBase);
-        go.transform.parent = transform;
-        terrainSpline = go.GetComponent<SpriteShapeController>().spline;
+        CreateNewTerrain();
+    }
+
+    public void CreateNewTerrain()
+    {
+        if (currentTerrainGO != null)
+        {
+            Destroy(currentTerrainGO);
+            Destroy(currentItemsGO);
+        }
+        currentTerrainGO = Instantiate(terrainConfig.terrainBase);
+        currentTerrainGO.transform.parent = transform;
+        terrainSpline = currentTerrainGO.GetComponent<SpriteShapeController>().spline;
         SetTerrainSize();
+        usedIndex = new List<int>();
         SetNewRandomPoints();
         SmoothTerrain();
+        currentItemsGO = new GameObject("Items");
+        currentItemsGO.transform.parent = transform;
         SetLandingSites();
     }
 
@@ -90,6 +105,7 @@ public class TerrainGenerator : MonoBehaviour
                 terrainSpline.SetPosition(tempPosX + 1, new Vector3(pos3.x, pos2.y, 0));
                 Vector3 newLandingSitePos = new Vector3(pos2.x, pos2.y + terrainConfig.offsetFromSurface, 0);
                 GameObject go = Instantiate(terrainConfig.landingSitePrefab, newLandingSitePos, Quaternion.identity, transform);
+                go.transform.parent = currentItemsGO.transform;
                 go.GetComponent<LandingSite>().SetLandingType(terrainConfig.baseLandingScore, terrainConfig.landingMultiplier2X, terrainConfig.landingSize2X, terrainConfig.landing2XUIColor);
                 aux++;
             }
@@ -108,6 +124,7 @@ public class TerrainGenerator : MonoBehaviour
                 terrainSpline.SetPosition(tempPosX - 1, new Vector3(pos1.x, pos2.y, 0));
                 Vector3 newLandingSitePos = new Vector3(pos2.x, pos2.y + terrainConfig.offsetFromSurface, 0);
                 GameObject go = Instantiate(terrainConfig.landingSitePrefab, newLandingSitePos, Quaternion.identity, transform);
+                go.transform.parent = currentItemsGO.transform;
                 go.GetComponent<LandingSite>().SetLandingType(terrainConfig.baseLandingScore, terrainConfig.landingMultiplier3X, terrainConfig.landingSize3X, terrainConfig.landing3XUIColor);
                 aux++;
             }
@@ -124,6 +141,7 @@ public class TerrainGenerator : MonoBehaviour
                 Vector3 pos2 = terrainSpline.GetPosition(tempPosX);
                 Vector3 newLandingSitePos = new Vector3(pos2.x, pos2.y + terrainConfig.offsetFromSurface, 0);
                 GameObject go = Instantiate(terrainConfig.landingSitePrefab, newLandingSitePos, Quaternion.identity, transform);
+                go.transform.parent = currentItemsGO.transform;
                 go.GetComponent<LandingSite>().SetLandingType(terrainConfig.baseLandingScore, terrainConfig.landingMultiplier5X, terrainConfig.landingSize5X, terrainConfig.landing5XUIColor);
                 aux++;
             }

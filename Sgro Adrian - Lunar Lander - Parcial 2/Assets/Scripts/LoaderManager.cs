@@ -41,4 +41,17 @@ public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
         }
 
     }
+
+    public void FakeLoad(float time)
+    {
+        StartCoroutine(FakeLoadingWithBlackScreen(time));
+    }
+
+    IEnumerator FakeLoadingWithBlackScreen(float time)
+    {
+        uI_LoadingScreen.FadeWithBlackScreen();
+        uI_LoadingScreen.LockFade();
+        yield return new WaitForSeconds(time);
+        uI_LoadingScreen.UnlockFade();
+    }
 }

@@ -22,12 +22,21 @@ MonoBehaviour:
   landingSitePrefab: {fileID: 5905459349907335762, guid: c7fc1ac1920b43a47b7832a3be8d616a,
     type: 3}
   offsetFromSurface: -2.95
+  baseLandingScore: 100
   landings2XPerTerrain: 10
-  landingPoints2X: 2
+  landingMultiplier2X: 2
   landingSize2X: 0.4
+  landing2XUIColor: {r: 0, g: 1, b: 0, a: 1}
   landings3XPerTerrain: 10
-  landingPoints3X: 3
+  landingMultiplier3X: 3
   landingSize3X: 0.2
+  landing3XUIColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   landings5XPerTerrain: 10
-  landingPoints5X: 5
+  landingMultiplier5X: 5
   landingSize5X: 0.1
+  landing5XUIColor: {r: 1, g: 0, b: 0, a: 1}
+  windZonePrefab: {fileID: 6381213170433576864, guid: dd69efe3bd8281949ae09f1ea81f9080,
+    type: 3}
+  windZonesAmountPerTerrain: 5
+  windZoneMinimunStrenght: 0.1
+  windZoneMaximunStrenght: 1

@@ -12,6 +12,7 @@ public class Ship: MonoBehaviour
     Rigidbody2D rb = null;
     CapsuleCollider2D col = null;
 
+    public Action OnShipReset;
     public Action OnAcceleration;
     public Action<int> OnScoreGet;
     public Action<bool, float> OnAltitudeChange;
@@ -24,6 +25,7 @@ public class Ship: MonoBehaviour
     float currentFuel;
     float currentAngle = 0;
     Vector2 savedVelocity = Vector2.zero;
+    Vector3 startingPosition = Vector3.zero;
     bool shipLocked = false;
 
     private void Awake()
@@ -39,6 +41,8 @@ public class Ship: MonoBehaviour
         col.isTrigger = true;
 
         currentFuel = shipConfiguration.maxFuel;
+
+        startingPosition = transform.position;
     }
 
     private void Start()
@@ -129,6 +133,14 @@ public class Ship: MonoBehaviour
             rb.WakeUp();
             rb.velocity = savedVelocity;
         }
+    }
+
+    public void ResetPositionToStart()
+    {
+        transform.position = startingPosition;
+        OnShipReset?.Invoke();
+        shipLocked = false;
+        rb.WakeUp();
     }
 
 }
