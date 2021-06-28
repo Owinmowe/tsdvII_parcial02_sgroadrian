@@ -9,6 +9,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] float timeBeforeReload = 3f;
     [SerializeField] float timeBetweenLevelCreation = 3f;
     int currentScore = 0;
+    int currentLevel = 1;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class GameplayManager : MonoBehaviour
     {
         if (successful)
         {
+            currentLevel++;
             StartCoroutine(SuccessfulLanding());
         }
     }
@@ -38,7 +40,7 @@ public class GameplayManager : MonoBehaviour
     IEnumerator SuccessfulLanding()
     {
         yield return new WaitForSeconds(timeBeforeReload);
-        LoaderManager.Get().FakeLoad(timeBetweenLevelCreation);
+        LoaderManager.Get().FakeLoad(timeBetweenLevelCreation, "Level " + currentLevel);
         yield return new WaitForSeconds(timeBetweenLevelCreation / 2);
         terrainGenerator.CreateNewTerrain();
         playerShip.ResetPositionToStart();
