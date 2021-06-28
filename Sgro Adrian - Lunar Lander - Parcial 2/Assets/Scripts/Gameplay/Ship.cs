@@ -13,6 +13,7 @@ public class Ship: MonoBehaviour
     CapsuleCollider2D col = null;
 
     public Action OnAcceleration;
+    public Action<int> OnScoreGet;
     public Action<bool, float> OnAltitudeChange;
     public Action<float, float> OnFuelConsumed;
     public Action<int> OnPointsRecieved;
@@ -22,6 +23,7 @@ public class Ship: MonoBehaviour
 
     float currentFuel;
     float currentAngle = 0;
+    Vector2 savedVelocity = Vector2.zero;
     bool shipLocked = false;
 
     private void Awake()
@@ -37,6 +39,12 @@ public class Ship: MonoBehaviour
         col.isTrigger = true;
 
         currentFuel = shipConfiguration.maxFuel;
+    }
+
+    private void Start()
+    {
+        OnFuelConsumed?.Invoke(currentFuel, shipConfiguration.maxFuel);
+        OnScoreGet?.Invoke(0);
     }
 
     private void Update()
@@ -85,12 +93,33 @@ public class Ship: MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.maxLandingCheckDistance, shipConfiguration.landingLayer);
         bool correctLandingAngle = Vector2.Angle(transform.up, Vector3.up) < shipConfiguration.landingAngleTolerance;
-        bool correctLandingPosition = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.maxLandingCheckDistance, shipConfiguration.landingLayer);
         bool correctLandingSpeed = rb.velocity.magnitude < shipConfiguration.landingSpeedTolerance;
-        OnLanding?.Invoke(correctLandingAngle && correctLandingPosition && correctLandingSpeed);
+        bool correctLanding = correctLandingAngle && hit && correctLandingSpeed;
+        OnLanding?.Invoke(correctLanding);
+
+        if (correctLanding) OnScoreGet?.Invoke(hit.collider.gameObject.GetComponentInParent<LandingSite>().GetScore());
+
         OnVelocityChange?.Invoke(Vector2.zero);
+        OnAltitudeChange?.Invoke(true, 0);
         shipLocked = true;
         rb.Sleep();
     }
+
+    public void ToggleMovement()
+    {
+        shipLocked = !shipLocked;
+        if (shipLocked)
+        {
+            savedVelocity = rb.velocity;
+            rb.Sleep();
+        }
+        else
+        {
+            rb.WakeUp();
+            rb.velocity = savedVelocity;
+        }
+    }
+
 }

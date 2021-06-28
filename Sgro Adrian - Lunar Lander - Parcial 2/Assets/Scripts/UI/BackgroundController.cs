@@ -4,11 +4,11 @@ using UnityEngine;
 public class BackgroundController : MonoBehaviour
 {
     [SerializeField] GameObject layerPrefab = null;
-    [SerializeField] [Range(0, 1)] float backgroundSizeX = .5f;
     [SerializeField] Background background = null;
     [SerializeField] Vector2 startingVelocity = Vector2.zero;
+    const int backgroundRepeatAmount = 3;
 
-    List<Animator> layersAnimators = new List<Animator>();
+    List<BackgroundLayer> layers = new List<BackgroundLayer>();
 
     private void Start()
     {
@@ -25,8 +25,9 @@ public class BackgroundController : MonoBehaviour
             go.name = layer.layerName;
             go.transform.parent = transform;
 
-            Animator anim = go.GetComponent<Animator>();
-            layersAnimators.Add(anim);
+            BackgroundLayer BGlayer = go.GetComponent<BackgroundLayer>();
+            layers.Add(BGlayer);
+            BGlayer.SetBaseSpeedMultiplier(layer.speedMultiplier);
 
             var renderer = go.GetComponent<SpriteRenderer>();
             renderer.sprite = layer.sprite;
@@ -40,26 +41,34 @@ public class BackgroundController : MonoBehaviour
             float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
             float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
-            go.transform.localScale = new Vector2((worldScreenWidth / width) * backgroundSizeX, worldScreenHeight / height);
-            renderer.size = new Vector2(renderer.size.x * 3, renderer.size.y * 3);
+            BGlayer.SetScreenSize(new Vector2(worldScreenWidth, worldScreenHeight));
+
+            go.transform.localScale = new Vector2((worldScreenWidth / width) , worldScreenHeight / height);
+            renderer.size = new Vector2(renderer.size.x * backgroundRepeatAmount, renderer.size.y * backgroundRepeatAmount);
         }
     }
 
-    public void SetBackgroundSpeed(Vector2 speed)
+    private void Update()
     {
-        for (int i = 0; i < background.backgroundLayersList.Count; i++)
+        foreach (var layer in layers)
         {
-            layersAnimators[i].SetFloat("SpeedMultiplierX", speed.x * background.backgroundLayersList[i].speedMultiplier);
-            layersAnimators[i].SetFloat("SpeedMultiplierY", speed.y * background.backgroundLayersList[i].speedMultiplier);
+            layer.UpdateLayer();
+        }
+    }
+
+    public void SetBackgroundSpeed(Vector2 velocity)
+    {
+        foreach (var layer in layers)
+        {
+            layer.SetVelocity(velocity);
         }
     }
 
     public void ResetBackgroundSpeed()
     {
-        for (int i = 0; i < background.backgroundLayersList.Count; i++)
+        foreach (var layer in layers)
         {
-            layersAnimators[i].SetFloat("SpeedMultiplierX", startingVelocity.x);
-            layersAnimators[i].SetFloat("SpeedMultiplierY", startingVelocity.y);
+            layer.SetVelocity(startingVelocity);
         }
     }
 

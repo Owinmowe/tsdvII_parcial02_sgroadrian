@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe7243e8235dcf4989e8d3885779d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
   layerPrefab: {fileID: 5853678086488523347, guid: abc3441fd97b1c346b2c9347691183b4,
     type: 3}
-  backgroundSizeX: 1
   background: {fileID: 11400000, guid: f3c45d96bd4b4be4cae2834ef1c71c1e, type: 2}
-  startingVelocity: {x: 0, y: -1}
+  startingVelocity: {x: 0, y: -0.1}
