@@ -23,6 +23,8 @@ public class UI_Ingame : MonoBehaviour
     [SerializeField] UI_Component fuelBar = null;
     [SerializeField] UI_Component fuelText = null;
     [SerializeField] UI_Component scoreText = null;
+    [SerializeField] UI_Component timeText = null;
+    float currentTime = 0;
 
     [Header("Pause HUD")]
     [SerializeField] List<UI_Component> pause_HUD = null;
@@ -43,6 +45,7 @@ public class UI_Ingame : MonoBehaviour
     [SerializeField] Vector2 minimunVelocity = Vector2.zero;
 
     TextMeshProUGUI scoreTextComponent = null;
+    TextMeshProUGUI timeTextComponent = null;
     TextMeshProUGUI velocityXTextComponent = null;
     TextMeshProUGUI velocityYTextComponent = null;
     TextMeshProUGUI AltitudeTextComponent = null;
@@ -67,6 +70,7 @@ public class UI_Ingame : MonoBehaviour
         if (fuelBar) fuelImageComponent = fuelBar.GetComponent<Image>();
         if (scoreText) scoreTextComponent = scoreText.GetComponent<TextMeshProUGUI>();
         if (fuelText) fuelTextComponent = fuelText.GetComponent<TextMeshProUGUI>();
+        if (timeText) timeTextComponent = timeText.GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -75,6 +79,11 @@ public class UI_Ingame : MonoBehaviour
         {
             uI_Component.TransitionIn();
         }
+    }
+
+    private void Update()
+    {
+        if(!onPauseMenu) UpdateTime();
     }
 
     private void RestartMenus()
@@ -91,6 +100,12 @@ public class UI_Ingame : MonoBehaviour
         {
             uI_Component.TransitionIn();
         }
+    }
+
+    void UpdateTime()
+    {
+        currentTime += Time.deltaTime;
+        timeTextComponent.text = "Time: " + Mathf.RoundToInt(currentTime).ToString();
     }
 
     void UpdateVelocity(Vector2 velocity)
