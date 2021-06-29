@@ -76,6 +76,7 @@ public class UI_Ingame : MonoBehaviour
 
     private void RestartMenus()
     {
+        timeStoped = false;
         foreach (var uI_Component in success_HUD)
         {
             uI_Component.TransitionOut();
