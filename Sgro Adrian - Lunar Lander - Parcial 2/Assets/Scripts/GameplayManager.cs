@@ -7,10 +7,11 @@ public class GameplayManager : MonoBehaviour
 {
     [SerializeField] Ship playerShip = null;
     [SerializeField] TerrainGenerator terrainGenerator = null;
-    [SerializeField] float timeBeforeReload = 3f;
     [SerializeField] float timeBetweenLevelCreation = 3f;
+    [SerializeField] float timeBeforeScoreScreen = 3f;
     int currentScore = 0;
     int currentLevel = 1;
+    bool nextLevelUnlocked = false;
 
     public static Action<int> UpdateScore;
 
@@ -36,18 +37,35 @@ public class GameplayManager : MonoBehaviour
     {
         if (successful)
         {
-            currentLevel++;
             StartCoroutine(SuccessfulLanding());
         }
+        else
+        {
+            StartCoroutine(CrashLanding());
+        }
+    }
+
+    public void UnlockNextLevel()
+    {
+        nextLevelUnlocked = true;
     }
 
     IEnumerator SuccessfulLanding()
     {
-        yield return new WaitForSeconds(timeBeforeReload);
+        currentLevel++;
+        while (!nextLevelUnlocked) yield return null;
+        nextLevelUnlocked = false;
         LoaderManager.Get().FakeLoad(timeBetweenLevelCreation, "Level " + currentLevel);
         yield return new WaitForSeconds(timeBetweenLevelCreation / 2);
         terrainGenerator.CreateNewTerrain();
         playerShip.ResetPositionToStart();
+    }
+
+    IEnumerator CrashLanding()
+    {
+        LoaderManager.Get().SetLastSessionScore(currentScore);
+        yield return new WaitForSeconds(timeBeforeScoreScreen);
+        LoaderManager.Get().LoadSceneAsync("Score Scene");
     }
 
 }
