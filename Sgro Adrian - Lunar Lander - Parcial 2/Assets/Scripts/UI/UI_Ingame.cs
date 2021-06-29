@@ -13,18 +13,19 @@ public class UI_Ingame : MonoBehaviour
     [SerializeField] List<UI_Component> general_HUD = null;
 
     [Header("Right Panel")]
-    [SerializeField] UI_Component velocityXText = null;
-    [SerializeField] UI_Component velocityYText = null;
-    [SerializeField] UI_Component velocityXArrow = null;
-    [SerializeField] UI_Component velocityYArrow = null;
-    [SerializeField] UI_Component AltitudeText = null;
+    [SerializeField] TextMeshProUGUI velocityXTextComponent = null;
+    [SerializeField] TextMeshProUGUI velocityYTextComponent = null;
+    [SerializeField] Image velocityXArrow = null;
+    [SerializeField] Image velocityYArrow = null;
+    [SerializeField] TextMeshProUGUI AltitudeTextComponent = null;
 
     [Header("Left Panel")]
-    [SerializeField] UI_Component fuelBar = null;
-    [SerializeField] UI_Component fuelText = null;
-    [SerializeField] UI_Component scoreText = null;
-    [SerializeField] UI_Component timeText = null;
+    [SerializeField] Image fuelImageComponent = null;
+    [SerializeField] TextMeshProUGUI fuelTextComponent = null;
+    [SerializeField] TextMeshProUGUI scoreTextComponent = null;
+    [SerializeField] TextMeshProUGUI timeTextComponent = null;
     float currentTime = 0;
+    bool timeStoped = false;
 
     [Header("Pause HUD")]
     [SerializeField] List<UI_Component> pause_HUD = null;
@@ -37,40 +38,27 @@ public class UI_Ingame : MonoBehaviour
 
     [Header("End game HUD")]
     [SerializeField] List<UI_Component> success_HUD = null;
-    [SerializeField] List<UI_Component> fail_HUD = null;
+    [SerializeField] List<UI_Component> crash_HUD = null;
+    [SerializeField] List<UI_Component> overLimit_HUD = null;
 
     [Header("Background")]
     [SerializeField] BackgroundController bg = null;
     [SerializeField] Vector2 bGVelocityMultiplier = new Vector2(.1f, .1f);
     [SerializeField] Vector2 minimunVelocity = Vector2.zero;
 
-    TextMeshProUGUI scoreTextComponent = null;
-    TextMeshProUGUI timeTextComponent = null;
-    TextMeshProUGUI velocityXTextComponent = null;
-    TextMeshProUGUI velocityYTextComponent = null;
-    TextMeshProUGUI AltitudeTextComponent = null;
-    TextMeshProUGUI fuelTextComponent = null;
-    Image fuelImageComponent = null;
-
     private void Awake()
     {
         if (playerShip)
         {
-            playerShip.OnVelocityChange += UpdateVelocity;
             playerShip.OnLanding += LandingEvent;
+            playerShip.OnOutOfMoonGravity += OutOfMoonGravity;
+            playerShip.OnVelocityChange += UpdateVelocity;
             playerShip.OnAltitudeChange += UpdateAltitude;
             playerShip.OnFuelConsumed += UpdateFuel;
             playerShip.OnShipReset += RestartMenus;
             GameplayManager.UpdateScore += UpdateScore;
             PlayerInput.OnPausePressed += Pause;
         }
-        if (velocityXText) velocityXTextComponent = velocityXText.GetComponent<TextMeshProUGUI>();
-        if (velocityYText) velocityYTextComponent = velocityYText.GetComponent<TextMeshProUGUI>();
-        if (AltitudeText) AltitudeTextComponent = AltitudeText.GetComponent<TextMeshProUGUI>();
-        if (fuelBar) fuelImageComponent = fuelBar.GetComponent<Image>();
-        if (scoreText) scoreTextComponent = scoreText.GetComponent<TextMeshProUGUI>();
-        if (fuelText) fuelTextComponent = fuelText.GetComponent<TextMeshProUGUI>();
-        if (timeText) timeTextComponent = timeText.GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -83,7 +71,7 @@ public class UI_Ingame : MonoBehaviour
 
     private void Update()
     {
-        if(!onPauseMenu) UpdateTime();
+        if(!timeStoped) UpdateTime();
     }
 
     private void RestartMenus()
@@ -92,7 +80,7 @@ public class UI_Ingame : MonoBehaviour
         {
             uI_Component.TransitionOut();
         }
-        foreach (var uI_Component in fail_HUD)
+        foreach (var uI_Component in crash_HUD)
         {
             uI_Component.TransitionOut();
         }
@@ -105,7 +93,9 @@ public class UI_Ingame : MonoBehaviour
     void UpdateTime()
     {
         currentTime += Time.deltaTime;
-        timeTextComponent.text = "Time: " + Mathf.RoundToInt(currentTime).ToString();
+        int time = Mathf.RoundToInt(currentTime);
+        timeTextComponent.text = "Time: " + time.ToString();
+        LoaderManager.Get().SetLastSessionTime(time);
     }
 
     void UpdateVelocity(Vector2 velocity)
@@ -128,7 +118,7 @@ public class UI_Ingame : MonoBehaviour
     void UpdateAltitude(bool canCheck, float altitude)
     {
         if (canCheck) AltitudeTextComponent.text = "Altitude: " + Mathf.RoundToInt(altitude * scaleMultiplier).ToString();
-        else AltitudeTextComponent.text = "Altitude: Undefined \nSensors can't reach terrain.";
+        else AltitudeTextComponent.text = "Altitude: Undefined";
     }
 
     void UpdateFuel(float currentFuel, float maxFuel)
@@ -144,6 +134,7 @@ public class UI_Ingame : MonoBehaviour
 
     void LandingEvent(bool success)
     {
+        timeStoped = true;
         bg.SetBackgroundSpeed(minimunVelocity);
         pauseButton.TransitionOut();
         if (success)
@@ -155,16 +146,28 @@ public class UI_Ingame : MonoBehaviour
         }
         else
         {
-            foreach (var item in fail_HUD)
+            foreach (var item in crash_HUD)
             {
                 item.TransitionIn();
             }
         }
     }
 
+    void OutOfMoonGravity()
+    {
+        timeStoped = true;
+        pauseButton.TransitionOut();
+        bg.SetBackgroundSpeed(minimunVelocity);
+        foreach (var item in overLimit_HUD)
+        {
+            item.TransitionIn();
+        }
+    }
+
     void Pause()
     {
         onPauseMenu = !onPauseMenu;
+        timeStoped = !timeStoped;
         if (onHelpMenu)
         {
             onHelpMenu = false;

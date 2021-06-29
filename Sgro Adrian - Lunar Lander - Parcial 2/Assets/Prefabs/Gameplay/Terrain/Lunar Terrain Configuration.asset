@@ -21,7 +21,7 @@ MonoBehaviour:
   perlinMultiplier: 10
   landingSitePrefab: {fileID: 5905459349907335762, guid: c7fc1ac1920b43a47b7832a3be8d616a,
     type: 3}
-  offsetFromSurface: -2.95
+  landingOffsetFromSurface: -3.5
   baseLandingScore: 100
   landings2XPerTerrain: 10
   landingMultiplier2X: 2
@@ -41,3 +41,8 @@ MonoBehaviour:
   windZoneBaseStrenghtMinimun: 0.5
   windZoneBaseStrenghtMaximun: 1.5
   windZoneVarianceStrenght: 0.1
+  hurracainePrefab: {fileID: 8202264512001560605, guid: aaf3009d4c8a12a4eb2afe9a0639a89c,
+    type: 3}
+  hurracaineOffsetFromEnds: 20
+  hurracaineOffsetFromGround: -15
+  outOfGravityLimit: 20

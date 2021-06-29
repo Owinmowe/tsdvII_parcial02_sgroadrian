@@ -15,16 +15,20 @@ public class CameraController : MonoBehaviour
 
     Camera camComponent;
     bool closeUp = false;
+    bool followingPlayer = true;
     float distanceFromPlayer = 0;
 
     private void Awake()
     {
         camComponent = GetComponent<Camera>();
         distanceFromPlayer = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), player.transform.position);
+        player.OnOutOfMoonGravity += StopFollowingPlayer;
+        if (player == null) followingPlayer = false;
     }
 
     private void Update()
     {
+        if (!followingPlayer) return;
         if (!closeUp && player.transform.position.y < playerClosePosition) CloseUp();
         else if(closeUp && player.transform.position.y > playerBackUpPosition) BackUp();
 
@@ -60,6 +64,11 @@ public class CameraController : MonoBehaviour
     void FollowPlayerX()
     {
         transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+    }
+
+    void StopFollowingPlayer()
+    {
+        followingPlayer = false;
     }
 
 }

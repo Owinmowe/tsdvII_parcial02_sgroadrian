@@ -7,7 +7,7 @@ using UnityEngine.U2D;
 public class TerrainConfiguration : ScriptableObject
 {
 
-    [Header("Terrain Config")]
+    [Header("Terrain Configuration")]
     public GameObject terrainBase = null;
     public TerrainLinesTypes currentTerrainLinesTypes = TerrainLinesTypes.Both;
     public int terrainSize = 100;
@@ -16,7 +16,7 @@ public class TerrainConfiguration : ScriptableObject
     public float perlinMultiplier = 10f;
     [Header("Landing Configuration")]
     public GameObject landingSitePrefab = null;
-    public float offsetFromSurface = -3.5f;
+    public float landingOffsetFromSurface = -3.5f;
     public int baseLandingScore = 100;
     public int landings2XPerTerrain = 7;
     public int landingMultiplier2X = 2;
@@ -36,4 +36,10 @@ public class TerrainConfiguration : ScriptableObject
     public float windZoneBaseStrenghtMinimun = .5f;
     public float windZoneBaseStrenghtMaximun = 1.5f;
     public float windZoneVarianceStrenght = .1f;
+    [Header("Limits Configuration")]
+    public GameObject hurracainePrefab = null;
+    public int hurracaineOffsetFromEnds = 20;
+    public float hurracaineOffsetFromGround = -3.5f;
+    public int outOfGravityLimit = 20;
+
 }

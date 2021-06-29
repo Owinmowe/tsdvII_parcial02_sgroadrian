@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Moon Terrain Profile
   m_EditorClassIdentifier: 
   m_Angles:
-  - m_Start: -220
-    m_End: 140
+  - m_Start: -268
+    m_End: 92
     m_Order: 10
     m_Sprites:
     - {fileID: 21300000, guid: 19514b0addfc92044b266e87294d9fb5, type: 3}

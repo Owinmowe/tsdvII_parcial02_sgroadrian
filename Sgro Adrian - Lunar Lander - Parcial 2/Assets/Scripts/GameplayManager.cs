@@ -19,7 +19,9 @@ public class GameplayManager : MonoBehaviour
     {
         playerShip.OnScoreGet += AddScore;
         playerShip.OnLanding += PlayerLanded;
+        playerShip.OnOutOfMoonGravity += OverTheLimit;
         PlayerInput.OnPausePressed += Pause;
+        terrainGenerator.OnSetNewLimit += SetNewLimit;
     }
 
     void AddScore(int score)
@@ -41,7 +43,7 @@ public class GameplayManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(CrashLanding());
+            StartCoroutine(EndGameplay());
         }
     }
 
@@ -61,11 +63,21 @@ public class GameplayManager : MonoBehaviour
         playerShip.ResetPositionToStart();
     }
 
-    IEnumerator CrashLanding()
+    IEnumerator EndGameplay()
     {
         LoaderManager.Get().SetLastSessionScore(currentScore);
         yield return new WaitForSeconds(timeBeforeScoreScreen);
         LoaderManager.Get().LoadSceneAsync("Score Scene");
+    }
+
+    void SetNewLimit(int limit)
+    {
+        playerShip.SetLimitY(limit);
+    }
+
+    void OverTheLimit()
+    {
+        StartCoroutine(EndGameplay());
     }
 
 }

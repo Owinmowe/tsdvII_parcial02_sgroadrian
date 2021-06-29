@@ -20,6 +20,7 @@ public class Ship: MonoBehaviour
     public Action<int> OnPointsRecieved;
     public Action OnRotation;
     public Action<bool> OnLanding;
+    public Action OnOutOfMoonGravity;
     public Action<Vector2> OnVelocityChange;
 
     float currentFuel;
@@ -27,6 +28,7 @@ public class Ship: MonoBehaviour
     Vector2 savedVelocity = Vector2.zero;
     Vector3 startingPosition = Vector3.zero;
     bool shipLocked = false;
+    int currentLimit = 0;
 
     private void Awake()
     {
@@ -58,6 +60,13 @@ public class Ship: MonoBehaviour
             OnVelocityChange?.Invoke(rb.velocity);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, shipConfiguration.maxTerrainCheckDistance, shipConfiguration.terrainLayer);
             OnAltitudeChange?.Invoke(hit, hit.distance - col.size.y / 2);
+            if (transform.position.y > currentLimit)
+            {
+                OnOutOfMoonGravity?.Invoke();
+                rb.drag = 0;
+                rb.gravityScale = 0;
+                shipLocked = true;
+            }
         }
     }
 
@@ -141,6 +150,11 @@ public class Ship: MonoBehaviour
         OnShipReset?.Invoke();
         shipLocked = false;
         rb.WakeUp();
+    }
+
+    public void SetLimitY(int limit)
+    {
+        currentLimit = limit;
     }
 
 }
