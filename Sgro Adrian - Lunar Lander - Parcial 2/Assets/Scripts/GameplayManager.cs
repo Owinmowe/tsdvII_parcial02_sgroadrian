@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class GameplayManager : MonoBehaviour
     int currentScore = 0;
     int currentLevel = 1;
 
+    public static Action<int> UpdateScore;
+
     private void Awake()
     {
         playerShip.OnScoreGet += AddScore;
@@ -21,6 +24,7 @@ public class GameplayManager : MonoBehaviour
     void AddScore(int score)
     {
         currentScore += score;
+        UpdateScore?.Invoke(currentScore);
     }
 
     private void Pause()

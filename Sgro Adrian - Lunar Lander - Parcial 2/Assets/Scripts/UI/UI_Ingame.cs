@@ -57,8 +57,8 @@ public class UI_Ingame : MonoBehaviour
             playerShip.OnLanding += LandingEvent;
             playerShip.OnAltitudeChange += UpdateAltitude;
             playerShip.OnFuelConsumed += UpdateFuel;
-            playerShip.OnScoreGet += UpdateScore;
             playerShip.OnShipReset += RestartMenus;
+            GameplayManager.UpdateScore += UpdateScore;
             PlayerInput.OnPausePressed += Pause;
         }
         if (velocityXText) velocityXTextComponent = velocityXText.GetComponent<TextMeshProUGUI>();
