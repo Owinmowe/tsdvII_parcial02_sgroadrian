@@ -1347,6 +1347,7 @@ MonoBehaviour:
   player: {fileID: 1014827717}
   playerClosePosition: 7
   playerBackUpPosition: 7
+  playerFollowYPosition: 10
   cameraZoomInDistance: 6
   cameraZoomInAltitude: 3
   cameraZoomOutDistance: 10
