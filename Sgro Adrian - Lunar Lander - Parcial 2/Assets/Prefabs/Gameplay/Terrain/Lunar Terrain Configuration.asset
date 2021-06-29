@@ -35,8 +35,9 @@ MonoBehaviour:
   landingMultiplier5X: 5
   landingSize5X: 0.1
   landing5XUIColor: {r: 1, g: 0, b: 0, a: 1}
-  windZonePrefab: {fileID: 6381213170433576864, guid: dd69efe3bd8281949ae09f1ea81f9080,
+  windZonePrefab: {fileID: 7648968067092230071, guid: 847a1e9ead9cb2f4e859f37d3162e85c,
     type: 3}
   windZonesAmountPerTerrain: 5
-  windZoneMinimunStrenght: 0.1
-  windZoneMaximunStrenght: 1
+  windZoneBaseStrenghtMinimun: 0.5
+  windZoneBaseStrenghtMaximun: 1.5
+  windZoneVarianceStrenght: 0.1

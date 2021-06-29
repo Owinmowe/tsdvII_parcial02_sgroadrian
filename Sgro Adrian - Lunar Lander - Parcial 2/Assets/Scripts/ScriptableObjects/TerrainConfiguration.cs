@@ -33,6 +33,7 @@ public class TerrainConfiguration : ScriptableObject
     [Header("Wind Zone Configuration")]
     public GameObject windZonePrefab = null;
     public int windZonesAmountPerTerrain = 5;
-    public float windZoneMinimunStrenght = .1f;
-    public float windZoneMaximunStrenght = 1f;
+    public float windZoneBaseStrenghtMinimun = .5f;
+    public float windZoneBaseStrenghtMaximun = 1.5f;
+    public float windZoneVarianceStrenght = .1f;
 }
