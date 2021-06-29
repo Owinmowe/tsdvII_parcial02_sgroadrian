@@ -10,16 +10,21 @@ public class ShipParticlesController : MonoBehaviour
     [SerializeField] int maxParticlesThrust = 100;
     [SerializeField] int particlesAccelerationSpeed = 40;
 
-    ParticleSystem.EmissionModule emissionModule;
+    ParticleSystem pSystem = null;
+    ParticleSystem.EmissionModule emissionModule = default;
 
     bool accelerating = false;
 
+    bool paused = false;
+
     private void Awake()
     {
-        emissionModule = GetComponent<ParticleSystem>().emission;
+        pSystem = GetComponent<ParticleSystem>();
+        emissionModule = pSystem.emission;
         if(ship != null)
         {
             ship.OnAcceleration += IncrementParticles;
+            PlayerInput.OnPausePressed += TogglePauseSystem;
         }
     }
 
@@ -51,6 +56,13 @@ public class ShipParticlesController : MonoBehaviour
         {
             emissionModule.rateOverTime = emissionModule.rateOverTime.constant - particlesAccelerationSpeed;
         }
+    }
+
+    void TogglePauseSystem()
+    {
+        paused = !paused;
+        if (paused) pSystem.Pause();
+        else pSystem.Play();
     }
 
 }

@@ -59,7 +59,7 @@ public class UI_Ingame : MonoBehaviour
             playerShip.OnFuelConsumed += UpdateFuel;
             playerShip.OnScoreGet += UpdateScore;
             playerShip.OnShipReset += RestartMenus;
-            playerShip.GetComponent<PlayerInput>().OnPausePressed += Pause;
+            PlayerInput.OnPausePressed += Pause;
         }
         if (velocityXText) velocityXTextComponent = velocityXText.GetComponent<TextMeshProUGUI>();
         if (velocityYText) velocityYTextComponent = velocityYText.GetComponent<TextMeshProUGUI>();

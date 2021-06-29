@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
 
-    public Action OnPausePressed;
+    static public Action OnPausePressed;
 
     Ship shipcomponent = null;
 

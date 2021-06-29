@@ -14,8 +14,8 @@ public class GameplayManager : MonoBehaviour
     private void Awake()
     {
         playerShip.OnScoreGet += AddScore;
-        playerShip.GetComponent<PlayerInput>().OnPausePressed += Pause;
         playerShip.OnLanding += PlayerLanded;
+        PlayerInput.OnPausePressed += Pause;
     }
 
     void AddScore(int score)
