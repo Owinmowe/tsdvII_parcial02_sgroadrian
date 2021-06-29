@@ -8,10 +8,12 @@ public class UI_ScoreScreen : MonoBehaviour
 
     [SerializeField] List<UI_Component> ScoreScreen_HUD;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI timeText;
 
     void Start()
     {
-        scoreText.text = "Final Score:\n" + LoaderManager.Get().GetLastSessionScore().ToString();
+        scoreText.text = "Final Score: " + LoaderManager.Get().GetLastSessionScore().ToString();
+        timeText.text = "Final Time: " + LoaderManager.Get().GetLastSessionTime().ToString();
         foreach (var item in ScoreScreen_HUD)
         {
             item.TransitionIn();

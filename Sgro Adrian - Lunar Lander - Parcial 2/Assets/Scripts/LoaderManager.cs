@@ -8,6 +8,7 @@ public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
     [SerializeField] float minTimeToLoadScene = 1f;
     [SerializeField] UI_LoadingScreen uI_LoadingScreen = null;
     int lastSessionScore = 0;
+    int lastSessionTime = 0;
 
     public void LoadSceneAsync(string sceneName)
     {
@@ -41,6 +42,16 @@ public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
             yield return null;
         }
 
+    }
+
+    public void SetLastSessionTime(int time)
+    {
+        lastSessionTime = time;
+    }
+
+    public int GetLastSessionTime()
+    {
+        return lastSessionTime;
     }
 
     public void SetLastSessionScore(int score)
