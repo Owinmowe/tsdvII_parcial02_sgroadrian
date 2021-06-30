@@ -1,17 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UI_MainMenu : MonoBehaviour
 {
     [SerializeField] List<UI_Component> splashArts = null;
     [Space(10)]
     [SerializeField] List<UI_Component> mainMenuComponents = null;
+    [SerializeField] TextMeshProUGUI versionText = null;
+    [Space(10)]
     [SerializeField] List<UI_Component> creditsMenuComponents = null;
+
+
 
     int currentSplashArt = 0;
 
     private void Start()
     {
+        versionText.text = "V" + Application.version; 
         foreach (var item in splashArts)
         {
             item.OnTransitionEnd += NextSplashArt;
