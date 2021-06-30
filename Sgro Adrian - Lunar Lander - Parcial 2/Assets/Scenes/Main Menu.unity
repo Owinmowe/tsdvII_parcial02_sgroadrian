@@ -621,6 +621,36 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.g
       value: 0.20123056
       objectReference: {fileID: 0}
+    - target: {fileID: 7020303856651452848, guid: e5493f3d344db414aa072d2f46c0c646,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020303856651452848, guid: e5493f3d344db414aa072d2f46c0c646,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020303856651452848, guid: e5493f3d344db414aa072d2f46c0c646,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 868158335}
+    - target: {fileID: 7020303856651452848, guid: e5493f3d344db414aa072d2f46c0c646,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020303856651452848, guid: e5493f3d344db414aa072d2f46c0c646,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020303856651452848, guid: e5493f3d344db414aa072d2f46c0c646,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7020303856651452849, guid: e5493f3d344db414aa072d2f46c0c646,
         type: 3}
       propertyPath: m_Type

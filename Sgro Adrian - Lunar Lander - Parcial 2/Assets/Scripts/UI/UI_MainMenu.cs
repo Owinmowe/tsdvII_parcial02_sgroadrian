@@ -77,4 +77,9 @@ public class UI_MainMenu : MonoBehaviour
         LoaderManager.Get().LoadSceneAsync("Gameplay");
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
